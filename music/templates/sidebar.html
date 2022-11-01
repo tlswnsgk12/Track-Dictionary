@@ -1,0 +1,32 @@
+<aside id="sidebar">
+
+    <header>
+        <h1>Recommended Tracks</h1>
+    </header>
+
+    {% for track in selected_tracks %}
+        <div id="article-container">
+            <a href="{{track.track_url}}" target="_blank">
+                <img src="{{ url_for('static', filename='vinyl.png') }}" class="track-img-small">
+            </a>
+            <div id="article-description">
+                <p> {{ track.title }} <em> by </em>{{track.artist.full_name}} </p>
+                <br>
+                {% if track.track_duration // 60 >= 10 and track.track_duration % 60 >= 10 %}
+                    <p> {{track.track_duration // 60}}:{{ track.track_duration % 60}} </p>
+                {% elif track.track_duration // 60 >= 10 and track.track_duration % 60 < 10 %}
+                    <p> {{track.track_duration // 60}}:0{{ track.track_duration % 60}} </p>
+                {% elif track.track_duration // 60 < 10 and track.track_duration % 60 >= 10 %}
+                    <p> 0{{track.track_duration // 60}}:{{ track.track_duration % 60}} </p>
+                {% else %}
+                    <p> 0{{track.track_duration // 60}}:0{{ track.track_duration % 60}} </p>
+                {% endif %}
+                    <a href="{{ url_for('musics_bp.tracks_by_artist', artist=track.artist.full_name) }}" >
+                        <br>
+                        <p style="font-weight: bolder; text-decoration: underline">Artist Info</p>
+                    </a>
+            </div>
+        </div>
+    {% endfor %}
+
+</aside>

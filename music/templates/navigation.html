@@ -1,0 +1,33 @@
+<nav id="nav" style="overflow-y: scroll; height: 100%">
+  <a href="{{ url_for('home_bp.home') }}"> <img id="logo" src="{{ url_for('static', filename='logo.png') }}"/> </a>
+
+  <h2 id="nav-header">
+    {% if 'user_name' in session %} Hello, {{ session['user_name'] }} {%
+    endif %}
+  </h2>
+  <a class="btn-nav" style="border-top: 2px solid white; border-bottom: 2px solid white;" href="{{ url_for('home_bp.home') }}">Home</a>
+  {% if 'user_name' not in session %} <a class="btn-nav" href="{{ url_for('authentication_bp.register') }}">Register</a> {% endif %}
+  {% if 'user_name' not in session %} <a class="btn-nav" href="{{ url_for('authentication_bp.login') }}">Login</a> {% endif %}
+  {% if 'user_name' in session %} <a class="btn-nav" href="{{ url_for('authentication_bp.logout') }}">Logout</a> {% endif %}
+  <div>
+    <h3>
+      <a class="btn-nav" style="border-top: 2px solid white; border-bottom: 2px solid white;" href="{{ url_for('musics_bp.tracks_by_artist') }}">
+        Browse Tracks by Artist (A-Z)
+      </a>
+    </h3>
+  </div>
+
+  <h3 class="sub-nav-header" style="text-align: center">Browse by Artist</h3>
+  <div style="overflow-y: scroll; height: 33%">
+    {% for artist in artist_urls %}
+      <a class="btn-nav" href="{{ artist_urls[artist] }}">{{ artist }}</a>
+    {% endfor %}
+  </div>
+
+  <h3 class="sub-nav-header" style="text-align: center; padding-top: 20px; border-top: 2px solid white;">Browse by Genre</h3>
+  <div style="overflow-y: scroll; height: 33%">
+    {% for genre in genre_urls %}
+      <a class="btn-nav" href="{{ genre_urls[genre] }}">{{ genre }}</a>
+    {% endfor %}
+  </div>
+</nav>
